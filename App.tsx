@@ -1,14 +1,18 @@
 import { StatusBar } from 'expo-status-bar';
 import { NativeBaseProvider } from 'native-base';
-import { MyTabs } from './src/routes/routes';
-import {Dashboard} from './src/screens/Dashboard';
+import { Routes } from './src/routes/routes';
+import {DashboardScreen } from './src/screens/DashboardScreen';
+import { UserProvider } from './src/contexts/UserContext';
 
 export default function App() {
   return (
     <NativeBaseProvider>
+      <UserProvider>
+
       <StatusBar style="auto" /> 
-      <MyTabs/>
-      {/*<Dashboard\>*/}   
+      <Routes/>
+      </UserProvider>
+         
    </NativeBaseProvider>
   );
 }
