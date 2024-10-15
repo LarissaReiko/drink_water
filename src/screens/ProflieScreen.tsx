@@ -1,7 +1,7 @@
 import { SafeAreaView } from 'react-native';
-import React, { useState, useContext } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { Text } from 'react-native'
-import { Avatar, Box, Divider, HStack, Slider } from 'native-base';
+import { Avatar, Box, Divider, HStack, Slider, Button } from 'native-base';
 
 import { UserContext } from '../contexts/UserContext';
 
@@ -12,15 +12,18 @@ interface ProfileScreenProps {
 export const ProfileScreen: React.FC<ProfileScreenProps> = ({
 
 }) => {
-    const { goal, setGoal } = useContext(UserContext);
+    //const [local, setLocal] = useState<number>(9999); (ele excluiu)
+    const { goal, storeData, user, getData } = useContext(UserContext);
 
+    
 
     return (
         <SafeAreaView>
-            <Avatar bg="purple.600" alignSelf="center" size="2xl" mt={20} justifyContent="center" source={{
-                uri: "https://images.unsplash.com/photo-1510771463146-e89e6e86560e?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=627&q=80"
+            <Avatar bg="purple.500" alignSelf="center" size="2xl" mt={20} justifyContent="center" source={{
+                uri: user?.photo || undefined
             }}>
-                RB
+                {user?.name.substring(0, 1)} 
+
             </Avatar>
             <Text
                 style={{
@@ -29,10 +32,10 @@ export const ProfileScreen: React.FC<ProfileScreenProps> = ({
                     marginTop: 25
                 }}
             >
-                Larissa Reiko
+                {user?.name}
             </Text>
 
-            <Divider my={20}  />
+            <Divider my={20} />
 
 
             <Text style={{
@@ -60,7 +63,7 @@ export const ProfileScreen: React.FC<ProfileScreenProps> = ({
                     value={goal}
                     minValue={0}
                     maxValue={4000}
-                    onChange={(value) => setGoal(value)}
+                    onChange={(value) => storeData(value)}
                     step={100}>
 
                     <Slider.Track>
