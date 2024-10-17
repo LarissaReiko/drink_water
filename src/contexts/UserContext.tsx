@@ -1,61 +1,41 @@
 import React, { createContext, useEffect, useState } from 'react'
 import { IUser } from '../types/UserInterface';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { usePersistState } from '../hooks/usePersisteState';
 
 interface IUserContext {
-    user: IUser | undefined;
+    user?: IUser;
     goal: number;
-    getData: () => Promise<number>;
-    storeData: (value: number) => Promise<void>;
+    setGoal: (value:number)=> Promise<void>;
+    setUser: (value:IUser)=> Promise<void>;
 }
 
 interface UserProviderProps {
     children: React.ReactNode;
 }
-const STORE_KEY = "@goal";
 const GOAL = 2000;
+const USER={
+    name: "Larissa Reiko",
+    photo: "https://i.pinimg.com/236x/83/21/62/8321620da49a153dbf96472030e9aedd.jpg"
+}
 
 export const UserContext = createContext<IUserContext>({
     goal: GOAL,
-    user: undefined,
-    getData: () => Promise.resolve(GOAL),
-    storeData: () => Promise.resolve(),
+    user: USER,
+    setGoal:() =>Promise.resolve(),
+    setUser:() =>Promise.resolve(),
 });
 
 
 export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
-    const [goal, setGoal] = useState<number>(GOAL);
-    const [user, setUser] = useState<IUser>();
-
-    useEffect(() => {
-        getData().then((data) => setGoal(data));
-        }, []);
+    const [user, setUser] = usePersistState<IUser>(USER, "@user");
+    const [goal, setGoal] = usePersistState<number>(GOAL, "goal1");
+    //const [goal2, setGoal2] = userPersistState<number>(GOAL, "goal2");
 
 
-    const storeData = async (value: number) => {
-        try {
-            setGoal(value);
-
-            const jsonValue = JSON.stringify(value);
-            await AsyncStorage.setItem("goal", jsonValue);
-        } catch (e) {
-            // saving error
-            console.error("saving value", e);
-        }
-    };
-
-    async function getData(): Promise<number> {
-        try {
-            const jsonValue = await AsyncStorage.getItem("goal");
-            return jsonValue != null ? JSON.parse(jsonValue) : GOAL;
-        } catch (e) {
-            // error reading value
-            console.error("erro reading value", e);
-            return GOAL;
-        }
-    }
+   
         return (
-            <UserContext.Provider value={{ goal, storeData, user, getData }}>
+            <UserContext.Provider value={{ goal, user,setGoal, setUser }}>
                 {children}
             </UserContext.Provider>
         );
