@@ -2,16 +2,18 @@
 import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
 import { NavigationContainer, ParamListBase } from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/AntDesign'
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, Settings } from 'react-native';
 import { DashboardScreen } from '../screens/DashboardScreen';
-import { ProfileScreen } from '../screens/ProflieScreen';
+import { ProfileScreen } from '../screens/ProfileScreen';
+import { SettingsScreen } from '../screens/SettingsScreen';
+//import { CalendarScreen } from '../screens/CalendarScreen';
 import { useState } from 'react';
-//import { Screen } from 'react-native-screens';
 
 type ITabRoutes ={
     Settings: undefined;
     Home: undefined;
     Profile: undefined;
+    Calendario: undefined; 
 }
 
 const Tab = createMaterialBottomTabNavigator <ITabRoutes>();
@@ -24,16 +26,16 @@ interface Imytabs {
 export const Routes: React.FunctionComponent<Imytabs> = props => {
     
     
-        const [goal , setGoal] = useState<number>(1000);
     return (
 
         <NavigationContainer>
             <Tab.Navigator>
 
                 <Tab.Screen name="Home" component={DashboardScreen} options={{ title: 'Inicio', tabBarIcon: () => <Icon name="home" size={20} color="black" /> }} />
-                <Tab.Screen name="Settings" component={Screen} options={{ title: 'Configurações', tabBarIcon: () => <Icon name="setting" size={20} color="black" /> }} />
+                <Tab.Screen name="Settings" component={SettingsScreen} options={{ title: 'Configurações', tabBarIcon: () => <Icon name="setting" size={20} color="black" /> }} />
                 <Tab.Screen name="Profile" component={ProfileScreen} options={{ title: 'Perfil', tabBarIcon: () => <Icon name="user" size={20} color="black" /> }} />
-
+                {/*<Tab.Screen name="Calendario" component={CalendarScreen} options={{ title: 'Calendar', tabBarIcon: () => <Icon name="Calendar" size={20} color="black" /> }} />
+*/}
             </Tab.Navigator>
         </NavigationContainer>
     );

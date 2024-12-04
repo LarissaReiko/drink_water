@@ -3,16 +3,13 @@ import { Text, HStack, Button, VStack, Box } from 'native-base';
 import { useToast } from 'native-base'
 import { UserContext } from '../contexts/UserContext';
 
-
-
-
 interface IDashboardProps {
 
 }
 
 export const DashboardScreen: React.FC<IDashboardProps> = () => {
     const {goal} = useContext(UserContext);
-    
+    const {} = useContext(UserContext);
     const [cupSize, setcupSize] = useState<number>(200);
     const [water, setWater] = useState<number>(0)
     const toast = useToast();
@@ -32,7 +29,6 @@ export const DashboardScreen: React.FC<IDashboardProps> = () => {
             toast.show({
                 description: "Você bateu sua meta",
                 placement: 'top'
-
             })
         }
     }, [water]);
@@ -68,7 +64,7 @@ export const DashboardScreen: React.FC<IDashboardProps> = () => {
 
                 <Box mt={10}>
                     <Button.Group >
-                        <Button onPress={() => handleChangeCupSize(200)} colorScheme="teal">Copo americano</Button>
+                        <Button onPress={() => handleChangeCupSize(200)} colorScheme="teal">Copo americano 200ml</Button>
                         <Button onPress={() => handleChangeCupSize(300)} colorScheme="teal">Copo de 300ml</Button>
                         <Button onPress={() => handleChangeCupSize(400)} colorScheme="teal">Copo de 400ml</Button>
                     </Button.Group>
