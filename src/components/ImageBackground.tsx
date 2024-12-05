@@ -24,7 +24,6 @@ const styles = StyleSheet.create({
   background: {
     flex: 1,
     width: '100%', // A largura vai ocupar 100% da tela
-    height: '120%', // A altura vai ocupar 100% da tela
   },
   overlay: {
     ...StyleSheet.absoluteFillObject,

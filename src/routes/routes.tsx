@@ -21,6 +21,7 @@ export const Routes: React.FunctionComponent = () => {
                     tabBarIcon: ({ color, focused }) => (
                         <Icon name="home" size={20} color={color} />
                     ),
+                    
                 }}
             >
                 <Tab.Screen

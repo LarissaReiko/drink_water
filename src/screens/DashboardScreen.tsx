@@ -3,6 +3,7 @@ import { Text, HStack, Button, VStack, Box } from 'native-base';
 import { useToast } from 'native-base'
 import { UserContext } from '../contexts/UserContext';
 import { usePersistState } from '../hooks/usePersisteState';
+import { CustomImageBackground } from '../components/ImageBackground';
 
 interface IDashboardProps {
 
@@ -13,7 +14,7 @@ export const DashboardScreen: React.FC<IDashboardProps> = () => {
     const [cupSize, setcupSize] = useState<number>(200);
     const [water, setWater] = usePersistState<number>(0, 'water');
     const toast = useToast();
-
+    const background = require('../../assets/agua_fundo2.jpg');
     const handleWater = () => {
         setWater(water + cupSize);
         toast.show({
@@ -35,31 +36,25 @@ export const DashboardScreen: React.FC<IDashboardProps> = () => {
     }, [water]);
 
     return (
-        <>
+        <CustomImageBackground background={background}>
             <VStack flex={1}
                 width='100%'
                 justifyContent="space-between"
                 alignItems={'center'}
-                mt={10}>
-
+            >
                 <Text fontSize="sm">
-
                     {'  '}Copo de {cupSize}ml
                 </Text>
-
                 <VStack space="5">
                     <HStack alignItems="center" justifyContent="center">
                         <Text fontSize="6xl">
                             {water}
                         </Text>
-                        <Text fontSize="xl">
+                        <Text fontSize="xl" fontWeight={700}>
                             {'  '}/ {goal}
                         </Text>
                     </HStack>
-
-                    
                 </VStack>
-
                 <Button
                     mt={5} colorScheme="primary" onPress={handleWater }>
                     Beber água
@@ -72,9 +67,7 @@ export const DashboardScreen: React.FC<IDashboardProps> = () => {
                         <Button width={120} onPress={() => handleChangeCupSize(400)} colorScheme="teal">400ml</Button>
                     </Button.Group>
                 </Box>
-
             </VStack>
-
-        </>
+        </CustomImageBackground>
     );
 };
