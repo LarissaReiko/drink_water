@@ -1,5 +1,6 @@
 {
   "expo": {
+    "newArchEnabled": true,
     "name": "drink_water",
     "slug": "drink_water",
     "version": "1.0.0",

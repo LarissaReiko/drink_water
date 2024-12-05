@@ -8,14 +8,21 @@ interface IDashboardProps {
 }
 
 export const DashboardScreen: React.FC<IDashboardProps> = () => {
-    const {goal} = useContext(UserContext);
-    const {} = useContext(UserContext);
+    const { goal } = useContext(UserContext);
+    const { goal2 } = useContext(UserContext);
     const [cupSize, setcupSize] = useState<number>(200);
-    const [water, setWater] = useState<number>(0)
+    const [water, setWater] = useState<number>(0);
+    const [waterdrunk, setWaterdrunk] = useState<number>(0);
     const toast = useToast();
 
     const handleWater = () => {
         setWater(water + cupSize);
+        toast.show({
+            description: `Você bebeu ${cupSize} de água`
+        })
+    }
+    const handleWaterdrunk = () => {
+        setWaterdrunk(waterdrunk + cupSize);
         toast.show({
             description: `Você bebeu ${cupSize} de água`
         })
@@ -32,6 +39,15 @@ export const DashboardScreen: React.FC<IDashboardProps> = () => {
             })
         }
     }, [water]);
+
+
+    useEffect(() => {
+        if (waterdrunk >= goal2) { 
+            toast.show({
+            });
+        }
+    }, [waterdrunk]); 
+
 
     return (
         <>
@@ -55,10 +71,12 @@ export const DashboardScreen: React.FC<IDashboardProps> = () => {
                             {'  '}/ {goal}
                         </Text>
                     </HStack>
+
+                    
                 </VStack>
 
                 <Button
-                    mt={5} colorScheme="primary" onPress={handleWater}>
+                    mt={5} colorScheme="primary" onPress={handleWater }>
                     Beber água
                 </Button>
 

@@ -1,54 +1,64 @@
-
 import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
-import { NavigationContainer, ParamListBase } from '@react-navigation/native';
-import Icon from 'react-native-vector-icons/AntDesign'
-import { View, Text, StyleSheet, Settings } from 'react-native';
+import { NavigationContainer } from '@react-navigation/native';
+import Icon from 'react-native-vector-icons/AntDesign';
 import { DashboardScreen } from '../screens/DashboardScreen';
 import { ProfileScreen } from '../screens/ProfileScreen';
 import { SettingsScreen } from '../screens/SettingsScreen';
-//import { CalendarScreen } from '../screens/CalendarScreen';
+import { CustomImageBackground } from '../components/ImageBackground'; // Certifique-se de importar o CustomImageBackground
 import { useState } from 'react';
 
-type ITabRoutes ={
+type ITabRoutes = {
     Settings: undefined;
     Home: undefined;
     Profile: undefined;
-    Calendario: undefined; 
+    Calendario: undefined;
 }
 
-const Tab = createMaterialBottomTabNavigator <ITabRoutes>();
+const Tab = createMaterialBottomTabNavigator<ITabRoutes>();
 
+export const Routes: React.FunctionComponent = () => {
+    const background = require('../../assets/agua_fundo2.jpg'); // Caminho da imagem
 
-interface Imytabs {
-
-}
-
-export const Routes: React.FunctionComponent<Imytabs> = props => {
-    
-    
     return (
-
         <NavigationContainer>
             <Tab.Navigator>
-
-                <Tab.Screen name="Home" component={DashboardScreen} options={{ title: 'Inicio', tabBarIcon: () => <Icon name="home" size={20} color="black" /> }} />
-                <Tab.Screen name="Settings" component={SettingsScreen} options={{ title: 'Configurações', tabBarIcon: () => <Icon name="setting" size={20} color="black" /> }} />
-                <Tab.Screen name="Profile" component={ProfileScreen} options={{ title: 'Perfil', tabBarIcon: () => <Icon name="user" size={20} color="black" /> }} />
-                {/*<Tab.Screen name="Calendario" component={CalendarScreen} options={{ title: 'Calendar', tabBarIcon: () => <Icon name="Calendar" size={20} color="black" /> }} />
-*/}
+                <Tab.Screen
+                    name="Home"
+                    options={{
+                        title: 'Inicio',
+                        tabBarIcon: () => <Icon name="home" size={20} color="black" />
+                    }}>
+                    {() => (
+                        <CustomImageBackground background={background}>
+                            <DashboardScreen />
+                        </CustomImageBackground>
+                    )}
+                </Tab.Screen>
+                <Tab.Screen
+                    name="Settings"
+                    options={{
+                        title: 'Configurações',
+                        tabBarIcon: () => <Icon name="setting" size={20} color="black" />
+                    }}>
+                    {() => (
+                        <CustomImageBackground background={background}>
+                            <SettingsScreen />
+                        </CustomImageBackground>
+                    )}
+                </Tab.Screen>
+                <Tab.Screen
+                    name="Profile"
+                    options={{
+                        title: 'Perfil',
+                        tabBarIcon: () => <Icon name="user" size={20} color="black" />
+                    }}>
+                    {() => (
+                        <CustomImageBackground background={background}>
+                            <ProfileScreen />
+                        </CustomImageBackground>
+                    )}
+                </Tab.Screen>
             </Tab.Navigator>
         </NavigationContainer>
     );
-}
-
-
-const Screen = () => {
-    return (
-        <View style={{ flex: 1, backgroundColor: 'red', justifyContent: 'center', alignItems: 'center' }}>
-            <Text>
-                 Tela 2
-
-            </Text>
-        </View>
-    )
-}
+};
