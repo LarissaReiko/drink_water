@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import { Text, HStack, Button, VStack, Box } from 'native-base';
 import { useToast } from 'native-base'
 import { UserContext } from '../contexts/UserContext';
+import { usePersistState } from '../hooks/usePersisteState';
 
 interface IDashboardProps {
 
@@ -9,10 +10,8 @@ interface IDashboardProps {
 
 export const DashboardScreen: React.FC<IDashboardProps> = () => {
     const { goal } = useContext(UserContext);
-    const { goal2 } = useContext(UserContext);
     const [cupSize, setcupSize] = useState<number>(200);
-    const [water, setWater] = useState<number>(0);
-    const [waterdrunk, setWaterdrunk] = useState<number>(0);
+    const [water, setWater] = usePersistState<number>(0, 'water');
     const toast = useToast();
 
     const handleWater = () => {
@@ -21,12 +20,7 @@ export const DashboardScreen: React.FC<IDashboardProps> = () => {
             description: `Você bebeu ${cupSize} de água`
         })
     }
-    const handleWaterdrunk = () => {
-        setWaterdrunk(waterdrunk + cupSize);
-        toast.show({
-            description: `Você bebeu ${cupSize} de água`
-        })
-    }
+
     const handleChangeCupSize = (size: number) => {
         setcupSize(size)
     }
@@ -39,15 +33,6 @@ export const DashboardScreen: React.FC<IDashboardProps> = () => {
             })
         }
     }, [water]);
-
-
-    useEffect(() => {
-        if (waterdrunk >= goal2) { 
-            toast.show({
-            });
-        }
-    }, [waterdrunk]); 
-
 
     return (
         <>
@@ -80,11 +65,11 @@ export const DashboardScreen: React.FC<IDashboardProps> = () => {
                     Beber água
                 </Button>
 
-                <Box mt={10}>
+                <Box mb={10}>
                     <Button.Group >
-                        <Button onPress={() => handleChangeCupSize(200)} colorScheme="teal">Copo americano 200ml</Button>
-                        <Button onPress={() => handleChangeCupSize(300)} colorScheme="teal">Copo de 300ml</Button>
-                        <Button onPress={() => handleChangeCupSize(400)} colorScheme="teal">Copo de 400ml</Button>
+                        <Button width={120} onPress={() => handleChangeCupSize(200)} colorScheme="teal">200ml</Button>
+                        <Button width={120} onPress={() => handleChangeCupSize(300)} colorScheme="teal">300ml</Button>
+                        <Button width={120} onPress={() => handleChangeCupSize(400)} colorScheme="teal">400ml</Button>
                     </Button.Group>
                 </Box>
 

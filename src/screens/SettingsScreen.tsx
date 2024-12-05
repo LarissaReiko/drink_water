@@ -9,7 +9,7 @@ export const SettingsScreen: React.FC<SettingsScreensProps> = ({ }) => {
     const { user, setUser } = useContext(UserContext);
 
     return (
-        <VStack space={4}>
+        <VStack space={4} pt={20} px={10}>
             {/* Texto acima do input */}
             <Text fontSize="md" fontWeight="bold">
                 Nome
